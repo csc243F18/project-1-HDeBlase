@@ -28,14 +28,12 @@ public class RetirementCalculator {
 			System.out.println("Please enter the amount you can save yearly.");
 			try {
 				savingsIn = Double.parseDouble(savingsInput.next());
-				checkPositive((int) Math.ceil(savingsIn));
+				if(checkPositive((int) Math.ceil(savingsIn))) {
 				break;
+				}
 			}
 			catch(NumberFormatException ignore) {
 				System.out.println("Invalid input.");
-			}
-			catch(InvalidPositiveException ex1) {
-				System.out.println(ex1.getMessage());
 			}
 		}
 		return savingsIn;
@@ -52,14 +50,12 @@ public class RetirementCalculator {
 			System.out.println("Please enter number of years until retirement");
 			try {
 				years = Integer.parseInt(yearInput.next());
-				checkPositive(years);
-				break;
+				if(checkPositive(years)) {
+					break;
+				}
 			}
 			catch(NumberFormatException ignore) {
 				System.out.println("Invalid input.");
-			}
-			catch(InvalidPositiveException ex1) {
-				System.out.println(ex1.getMessage());
 			}
 		}
 		return years;
@@ -70,10 +66,11 @@ public class RetirementCalculator {
 	 * @param check an integer to be checked
 	 * @throws InvalidPositiveException if integer is <= 0
 	 */
-	public static void checkPositive(int check) throws InvalidPositiveException{
+	public static boolean checkPositive(int check) {
 		if(check <= 0) {
-			throw new InvalidPositiveException("Input must be above 0.");
+			return false;
 		}
+		return true;
 	}
 	
 	/**
