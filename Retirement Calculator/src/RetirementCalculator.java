@@ -11,7 +11,14 @@ public class RetirementCalculator {
 
 	public static void main(String[] args) {
 		double savings = getSavings();
-		int years = getYears();
+		while(true) {
+			try {
+				int years = getYears();
+				break;
+			}catch(IllegalArguementException e) {
+				System.out.println(e.getMessage());
+			}
+		}
 		double total = calcTotal(savings, years);
 		printTotal(total, years);
 
@@ -43,20 +50,21 @@ public class RetirementCalculator {
 	 * gets input for number of years until retirement and checks for valid numbers
 	 * @return number of years
 	 */
-	public static int getYears() {
+	public static int getYears() throws IllegalArgumentException{
 		Scanner yearInput = new Scanner(System.in);
 		int years = 0;
 		while(true) {
 			System.out.println("Please enter number of years until retirement");
 			try {
 				years = Integer.parseInt(yearInput.next());
-				if(checkPositive(years)) {
-					break;
-				}
+				break;
 			}
 			catch(NumberFormatException ignore) {
 				System.out.println("Invalid input.");
 			}
+		}
+		if(years < 0 || years > 120) {
+			throw new IllegalArguementException("Input must be between 0-120.")
 		}
 		return years;
 	}
